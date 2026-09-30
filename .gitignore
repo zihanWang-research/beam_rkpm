@@ -1,0 +1,18 @@
+# Python runtime artefacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pytest-cache-files-*/
+.venv/
+
+# MATLAB editor/runtime artefacts
+*.asv
+
+# LaTeX build intermediates (retain source PDFs)
+*.aux
+*.log
+*.out
+*.toc
+
+# OS metadata
+.DS_Store
