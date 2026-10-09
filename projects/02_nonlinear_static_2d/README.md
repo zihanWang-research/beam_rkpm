@@ -13,11 +13,42 @@
 当前主程序在 20 个载荷步中均于 4 次 Newton 迭代内收敛。最终自由自由度残量约为
 `4.14e-11`，约束残量约为 `6.14e-18`，切线对称性误差约为 `7.06e-17`。
 
+局部 bending 切线和完整全局切线均已通过中心差分检查。完整全局切线的相对误差为
+`1.57e-10`。解析式对应侧点 `A`（`theta=0`）的横向位移；总载荷为 `2` 时，
+数值值为 `-7.00059530e-03`，解析值为 `-6.82848862e-03`，误差为 `2.52%`。
+将总载荷降至 `2e-3` 后，同一点的误差为 `2.11%`，说明小载荷下 nonlinear
+结果趋近线性解析解。之前使用顶部 `DY(end)` 与该解析式比较，属于点位不一致，
+已经修正为侧点 `-DX(1)`。
+
+在相同小载荷和相同比较点下，节点收敛结果为：
+
+完整数据表：[nonlinear_node_convergence.csv](results/nonlinear_node_convergence.csv)
+
+| 节点数 | 相对误差 |
+|---:|---:|
+| 17 | 2.11% |
+| 33 | 1.1603% |
+| 65 | 0.7159% |
+| 129 | 0.5528% |
+
+误差随节点加密持续下降，说明当前 nonlinear 实现已经通过基本的空间离散收敛检查；
+剩余误差主要需要从影响域、积分和端点离散处理方面继续分析。
+
+需要注意：`code/matlab/benchmarks/quarter_ring/user_1d_learning/node_integration_results/`
+中的旧线性 CSV 是历史参数扫描结果，其中解析位移量级与当前 nonlinear 参数不一致，
+不能直接用作线性极限对照。最终线性极限检查必须使用相同的
+`E`、截面、`R/t`、总载荷、积分规则、边界条件和比较点重新运行。
+
+同参数线性极限检查已经完成。线性程序在 `F=1` 时的位移斜率为
+`3.38864014e-03`；nonlinear 程序在 `F=2e-6` 时的位移斜率为
+`3.41960349e-03`，对应解析斜率 `3.41424431e-03`，相对误差为 `0.1570%`。
+因此 nonlinear 在极小载荷下正确退化到线性响应。完整数据见
+`results/linear_limit_check.csv`。
+
 ## 下一目标
 
-1. 对 bending 一致切线执行有限差分验证；
-2. 检查小载荷极限是否回到线性四分之一圆环结果；
-3. 复现 Raknes 4.2：端部恒定弯矩作用下的二维悬臂梁大转动。
+1. 复现 Raknes 4.2：端部恒定弯矩作用下的二维悬臂梁大转动；
+2. 整理最终代码和理论笔记。
 
 ## 学习与实现顺序
 
@@ -37,6 +68,8 @@
 
 - 线性学习基准副本：`code/matlab_linear_reference/main_quarter_ring_learning.m`。
 - 当前 nonlinear 主程序：`code/matlab_linear_reference/main_quarter_ring_nonlinear_learning.m`。
+- 当前 nonlinear 文件夹中的逐步完成版本：`code/matlab_nonlinear/main_quarter_ring_nonlinear_learning.m`。
+- 局部 bending 切线检查：`code/matlab_nonlinear/checkQuarterRingBendingTangent.m`。
 - 逐阶段修改指南：`code/matlab_linear_reference/NONLINEAR_MIGRATION_GUIDE.md`。
 - 第一步：`../../code/matlab/nonlinear/static_2d/main_nonlinear_membrane_bar_learning.m`
 - 第一个验证：二维直杆轴向拉伸，只验证 nonlinear membrane。
@@ -47,7 +80,7 @@
 ## 完成标准
 
 - 残量随 Newton 迭代稳定下降。
-- 一致切线通过有限差分验证。
+- 局部 bending 和完整全局一致切线均通过有限差分验证。
 - 刚体运动不产生内力。
 - 端弯矩算例能够形成论文中的圆弧构型。
 

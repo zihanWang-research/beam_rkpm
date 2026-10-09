@@ -1,0 +1,5 @@
+nNode,relativeErrorPercent,loadCase,comparisonPoint
+17,2.1100,small_load_2e-3,side_A_theta_0
+33,1.1603,small_load_2e-3,side_A_theta_0
+65,0.7159,small_load_2e-3,side_A_theta_0
+129,0.5528,small_load_2e-3,side_A_theta_0

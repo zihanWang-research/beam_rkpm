@@ -44,10 +44,10 @@ clear; clc; close all;
 % TODO 1.4: Build etaNode as cumulative chord length (or choose theta as eta,
 %            but then consistently include the parameter-to-arc-length factor).
 
-nNode = 17;             % Replace with a value such as 17 after TODO 1.1.
+nNode = 33;             % Replace with a value such as 17 after TODO 1.1.
 R = 1;
 E = 1e6;
-totalForce = 2;         % Point-load magnitude F on the complete circular ring.
+totalForce = 20;         % Point-load magnitude F on the complete circular ring.
 
 sectionArea = 0.2;
 
@@ -64,7 +64,7 @@ alphaPCA = 3.5;
 alphaRKPM = 2.5;  % Dimensionless alpha in rho = alpha*h.
 
 % nonlinear iteration set up
-nLoadStep = 20;
+nLoadStep = 200;
 maximumNewtonIteration = 30;
 newtonTolerance = 1.0e-9;
 

@@ -1,0 +1,3 @@
+model,totalForce,uA,displacementPerForce,analyticalDisplacementPerForce,relativeErrorPercent
+linear,1,3.38864014e-03,3.38864014e-03,3.41424431e-03,0.7499
+nonlinear,2e-6,-6.83920698e-09,3.41960349e-03,3.41424431e-03,0.1570
